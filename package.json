@@ -1,0 +1,12 @@
+{
+  "name": "omnistack-tindev",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "dev": "nodemon server.js"
+  }
+}
