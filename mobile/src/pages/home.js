@@ -84,14 +84,18 @@ export default function Home({navigation}) {
                 }
             </View>
 
-            <View style={styles.actions}>
-                <TouchableOpacity style={styles.action} onPress={doDislike}>
-                    <Image source={dislike}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.action} onPress={doLike}>
-                    <Image source={like}/>
-                </TouchableOpacity>
-            </View>
+            {
+                usuarios.length > 0 && (
+                    <View style={styles.actions}>
+                        <TouchableOpacity style={styles.action} onPress={doDislike}>
+                            <Image source={dislike}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.action} onPress={doLike}>
+                            <Image source={like}/>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         </SafeAreaView>
     );
 }
