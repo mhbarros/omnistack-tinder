@@ -34,30 +34,37 @@ module.exports = {
             return res.json({ok: true, data: user});
         }
 
-        const github_response = await axios.get(`https://api.github.com/users/${github_user}`);
+        try{
+            const github_response = await axios.get(`https://api.github.com/users/${github_user}`);
 
-        if (github_response.status != 200) {
-            return res.json({ok: false, msg: "Ocorreu um erro de conexão. Por favor, tente novamente."})
-       }
+            const {avatar_url: github_avatar, bio: github_bio, name: nome} = github_response.data;
 
-        const {avatar_url: github_avatar, bio: github_bio, name: nome} = github_response.data;
+            if (typeof github_avatar === 'undefined' || github_avatar === '' || github_avatar == null) {
+                return res.json({ok: false, msg: "É necessário que o usuário possua uma foto de perfil."})
+            }
 
-        if (typeof github_avatar === 'undefined' || github_avatar === '' || github_avatar == null) {
-            return res.json({ok: false, msg: "É necessário que o usuário possua uma foto de perfil."})
+            if(github_response.status === 404){
+                return res.json({ok: false, msg: "Usuário não encontrado."});
+            }
+
+            if (typeof nome === 'undefined' || nome === '' || nome == null) {
+                return res.json({ok: false, msg: "Usuário não possui um nome no Github."});
+            }
+
+            const dev = await devModel.create({
+                github_user,
+                nome,
+                github_bio,
+                github_avatar
+            });
+
+            return res.json({ok: true, data: dev});
+
+        }catch (e) {
+
+            res.status(e.response.status).send({ok: false, msg: "Ocorreu um erro de conexão. Por favor, tente novamente."});
+
         }
-
-        if (typeof nome === 'undefined' || nome === '' || nome == null) {
-            return res.json({ok: false, msg: "Usuário não possui um nome no Github."})
-        }
-
-        const dev = await devModel.create({
-            github_user,
-            nome,
-            github_bio,
-            github_avatar
-        });
-
-        return res.json({ok: true, data: dev});
 
     }
 };

@@ -13,13 +13,20 @@
 }
 
 .login-container form input {
-    margin-top: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
     height: 48px;
     padding: 0 20px;
     font-size: 16px;
     color: #666
+}
+
+.login-container form input[type='text'] {
+    margin-top: 30px;
+}
+
+.login-container form input[type='password'] {
+    margin-top: 5px;
 }
 
 .login-container form input::placeholder {
@@ -36,4 +43,19 @@
     font-weight: bold;
     color:white;
     cursor:pointer;
+}
+
+.login-container form span {
+    margin-top: 10px;
+    color: #666666;
+}
+
+.login-container form .forgot-pass:hover {
+    cursor:pointer;
+    color:#333333;
+}
+
+.login-container form .login-error {
+    color: #ff5459;
+    font-style: italic;
 }
