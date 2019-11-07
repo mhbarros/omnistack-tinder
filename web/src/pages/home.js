@@ -17,9 +17,10 @@ export default function Home(props) {
     useEffect(() => {
 
         const getUsuarios = async () => {
+            console.log('usuario', props.match.params.id);
             const response = await api.get('/dev', {
                 headers: {
-                    user_id: props.match.params.id
+                    userId: props.match.params.id,
 
                 }
             });
@@ -64,7 +65,7 @@ export default function Home(props) {
             </Link>
 
             {
-                (usuarios.length !== 0 ? (
+                (typeof usuarios !== 'undefined' && usuarios.length !== 0 ? (
                     <ul>
                         {usuarios.map(usuario => (
                             <li key={usuario._id}>
@@ -84,7 +85,7 @@ export default function Home(props) {
                             </li>
                         ))};
                     </ul>
-                ) : <div class={'empty'}>Sem usuários disponíveis =(</div>)
+                ) : <div className={'empty'}>Sem usuários disponíveis =(</div>)
             }
 
         </div>

@@ -3,9 +3,11 @@ const devModel = require('../model/dev');
 
 module.exports = {
     async getDev(req, res) {
-        const {user_id} = req.headers;
+        const {userid} = req.headers;
 
-        const dev = await devModel.findById(user_id);
+        console.log(userid);
+
+        const dev = await devModel.findById(userid);
 
         if (!dev) {
             return res.json({ok: false, msg: 'Faça login para continuar'});
@@ -13,7 +15,7 @@ module.exports = {
 
         const users = await devModel.find({
             $and: [
-                {_id: {$ne: user_id}}, // not equals
+                {_id: {$ne: userid}}, // not equals
                 {_id: {$nin: dev.likes}}, // not in
                 {_id: {$nin: dev.dislikes}}
             ]
@@ -30,7 +32,9 @@ module.exports = {
 
         // Verifica se usuário já existe
         const user = await devModel.findOne({github_user: github_user});
+
         if (user) {
+            console.log('existe na teoria');
             return res.json({ok: true, data: user});
         }
 
