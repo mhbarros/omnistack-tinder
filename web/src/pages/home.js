@@ -69,7 +69,7 @@ export default function Home(props) {
                     <ul>
                         {usuarios.map(usuario => (
                             <li key={usuario._id}>
-                                <img src={usuario.github_avatar} alt={''}/>
+                                <a href={`https://github.com/${usuario.github_user}`} target={'_blank'} ><img src={usuario.github_avatar} alt={'Perfil'}/></a>
                                 <footer>
                                     <strong>{usuario.nome}</strong>
                                     <p>{usuario.github_bio}</p>
